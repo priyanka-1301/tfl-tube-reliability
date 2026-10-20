@@ -93,3 +93,16 @@ streamlit run app.py  # open the app
 - Categorise free-text reasons (e.g. signal failure, staff shortage, customer incident)
 - Send an alert when a chosen line becomes disrupted
 
+## Resources
+
+University course materials: teaching and examples from my studies at the University of Greenwich, which I drew on for the Python and SQL techniques used here
+TfL API Portal (api-portal.tfl.gov.uk): to register for an API key and find the line status endpoint
+Python.org: to download Python 3.13
+Visual Studio Code: code editor
+GitHub and GitHub Actions: version control, and running the collector on a schedule.
+## How Ai helped
+
+
+-GitHub Copilot in VS Code suggested code completions as I typed.
+
+-Grammarly checked the spelling and grammar of this README.
