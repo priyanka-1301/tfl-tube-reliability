@@ -384,7 +384,7 @@ with tab_health:
     """).df()
     target = alt.Chart().mark_rule(color=GREY, strokeDash=[4, 4]).encode(y=alt.datum(96))
     bars = alt.Chart().mark_bar(color=TFL_BLUE, cornerRadiusEnd=3).encode(
-        x=alt.X("Day:N", sort=None, title=None),
+         x=alt.X("Day:N", sort=None, title=None, axis=alt.Axis(labelAngle=0)),
         y=alt.Y("Snapshots:Q"),
         tooltip=["Day", "Snapshots"],
     )
