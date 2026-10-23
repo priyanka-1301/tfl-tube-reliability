@@ -231,7 +231,7 @@ with tab_league:
                             legend=None),
             tooltip=["Line", "% of time disrupted"],
         ),
-        use_container_width=True,
+        width="stretch",
     )
 
 # --- Should I travel? -------------------------------------------------------
@@ -302,7 +302,7 @@ with tab_patterns:
             alt.Chart(by_hour).mark_bar(color=accent, cornerRadiusEnd=3)
             .encode(x=alt.X("Hour of day:O"), y=alt.Y("% of time disrupted:Q"),
                     tooltip=["Hour of day", "% of time disrupted"]),
-            use_container_width=True,
+            width="stretch",
         )
     with right:
         st.markdown(f"##### Most common problems ({selected})")
@@ -320,7 +320,7 @@ with tab_patterns:
                 .encode(x=alt.X("Snapshots:Q", title="Number of snapshots"),
                         y=alt.Y("Status:N", sort="-x", title=None),
                         tooltip=["Status", "Snapshots"]),
-                use_container_width=True,
+                width="stretch",
             )
 
 # --- Disruption log ---------------------------------------------------------
@@ -337,7 +337,7 @@ with tab_log:
     st.dataframe(
         all_events,
         hide_index=True,
-        use_container_width=True,
+        width="stretch",
         column_config={
             "line_name": "Line",
             "disruption_type": "Type",
@@ -388,7 +388,7 @@ with tab_health:
         y=alt.Y("Snapshots:Q"),
         tooltip=["Day", "Snapshots"],
     )
-    st.altair_chart(alt.layer(bars, target, data=per_day), use_container_width=True)
+    st.altair_chart(alt.layer(bars, target, data=per_day), width="stretch")
 
     st.markdown("##### Data quality checks")
     results = []
@@ -396,7 +396,7 @@ with tab_health:
         bad_rows = con.execute(f"SELECT count(*) FROM ({sql})").fetchone()[0]
         results.append({"Check": name,
                         "Result": "Pass" if bad_rows == 0 else f"Fail ({bad_rows} problem rows)"})
-    st.dataframe(results, hide_index=True, use_container_width=True)
+    st.dataframe(results, hide_index=True, width="stretch")
 
     st.caption("Early days show fewer snapshots because GitHub's built-in scheduler skipped "
                "many runs. Since adding cron-job.org as an external trigger, collection "
