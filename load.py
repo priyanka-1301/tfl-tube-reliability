@@ -20,9 +20,8 @@ def collected_at_from_name(path):
     return datetime.strptime(stamp, "%Y%m%dT%H%M%SZ")
 
 
-def main():
-    con = duckdb.connect(DB_PATH)
-
+def load_new_files(con):
+    """Load any raw files not yet in raw_snapshots. Returns (new_files_loaded, total_snapshots)."""
     con.execute("""
         CREATE TABLE IF NOT EXISTS raw_snapshots (
             file_name         VARCHAR PRIMARY KEY,
@@ -49,7 +48,13 @@ def main():
         )
 
     total = con.execute("SELECT count(*) FROM raw_snapshots").fetchone()[0]
-    print(f"Loaded {len(new_files)} new file(s). Total snapshots in database: {total}")
+    return len(new_files), total
+
+
+def main():
+    con = duckdb.connect(DB_PATH)
+    loaded, total = load_new_files(con)
+    print(f"Loaded {loaded} new file(s). Total snapshots in database: {total}")
     con.close()
 
 

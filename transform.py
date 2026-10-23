@@ -15,7 +15,7 @@ DB_PATH = "data/tube.duckdb"
 NORMAL_CODES = "(10, 18, 19, 20)"
 
 # If snapshots are further apart than this, we don't assume a disruption
-# continued through the gap (GitHub Actions sometimes skips scheduled runs).
+# continued through the gap (scheduled runs can be delayed or skipped).
 MAX_GAP = "INTERVAL 60 MINUTE"
 
 STAGING_SQL = """
@@ -141,16 +141,24 @@ SELECT
 FROM events
 """
 
+TABLES = [
+    ("stg_line_status", STAGING_SQL),
+    ("line_snapshot", LINE_SNAPSHOT_SQL),
+    ("disruption_events", EVENTS_SQL),
+]
+
+
+def build_tables(con):
+    """Rebuild every clean table from raw_snapshots, in order."""
+    for _, sql in TABLES:
+        con.execute(sql)
+
 
 def main():
     con = duckdb.connect(DB_PATH)
+    build_tables(con)
 
-    for name, sql in [
-        ("stg_line_status", STAGING_SQL),
-        ("line_snapshot", LINE_SNAPSHOT_SQL),
-        ("disruption_events", EVENTS_SQL),
-    ]:
-        con.execute(sql)
+    for name, _ in TABLES:
         rows = con.execute(f"SELECT count(*) FROM {name}").fetchone()[0]
         print(f"{name}: {rows} rows")
 

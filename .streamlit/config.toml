@@ -1,0 +1,7 @@
+[theme]
+base = "light"
+primaryColor = "#DC241F"            # TfL roundel red: buttons, dropdown highlight
+backgroundColor = "#F7F8FC"         # soft off-white page background
+secondaryBackgroundColor = "#E6EAF5" # light Tube-blue tint: dropdown and table header
+textColor = "#0B1F4D"               # deep navy text
+font = "sans serif"
